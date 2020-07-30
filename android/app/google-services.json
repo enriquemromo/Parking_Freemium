@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "136352767374",
+    "firebase_url": "https://parkingfreemium.firebaseio.com",
+    "project_id": "parkingfreemium",
+    "storage_bucket": "parkingfreemium.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:136352767374:android:ab639deb473b31d6ec18df",
+        "android_client_info": {
+          "package_name": "mx.rfpro.parking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "136352767374-l65ubhmlu9k0e86eegv2lbgr87849jbq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5PtNUbPLMN0xZweBRI2M1f3O7qC31tF4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "136352767374-l65ubhmlu9k0e86eegv2lbgr87849jbq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,16 +1,17 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:parkingfreemium/api/authentication_api.dart';
 import 'package:parkingfreemium/model/login_response.dart';
 import 'package:parkingfreemium/page/home_page.dart';
-import 'package:parkingfreemium/page/signup_Page.dart';
+import 'package:parkingfreemium/page/signin_page.dart';
 import 'package:parkingfreemium/page/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 import '../theme.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -18,11 +19,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageStatelessWidget extends State<LoginPage> {
-  String errorMessageUsername = null;
+  String errorMessageEmail = null;
   String errorMessagePassword = null;
-  TextEditingController _usernameTextEditingController =
-      TextEditingController();
-  TextEditingController _passwordTextEditingController =
+  TextEditingController _textEditingControllerEmail = TextEditingController();
+  TextEditingController _textEditingControllerPassword =
       TextEditingController();
 
   @override
@@ -36,7 +36,8 @@ class LoginPageStatelessWidget extends State<LoginPage> {
         body: Center(
           // Center is a layout widget. It takes a single child and positions it
           // in the middle of the parent.
-          child: Column(
+          child: SingleChildScrollView(
+              child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Padding(
@@ -47,11 +48,14 @@ class LoginPageStatelessWidget extends State<LoginPage> {
                   bottom: 20,
                 ),
                 child: TextField(
-                  controller: _usernameTextEditingController,
+                  controller: _textEditingControllerEmail,
+                  autofocus: true,
+                  textInputAction: TextInputAction.next,
+                  onSubmitted: (_) => FocusScope.of(context).nextFocus(),
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.all(20.0),
-                    hintText: 'Username',
-                    errorText: errorMessageUsername,
+                    hintText: 'email',
+                    errorText: errorMessageEmail,
                   ),
                 ),
               ),
@@ -63,7 +67,8 @@ class LoginPageStatelessWidget extends State<LoginPage> {
                   bottom: 20,
                 ),
                 child: TextField(
-                  controller: _passwordTextEditingController,
+                  controller: _textEditingControllerPassword,
+                  textInputAction: TextInputAction.done,
                   obscureText: true,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.all(20.0),
@@ -76,30 +81,30 @@ class LoginPageStatelessWidget extends State<LoginPage> {
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: RaisedButton(
                   onPressed: () async {
-                    if (_usernameTextEditingController.text.isEmpty ||
-                        _passwordTextEditingController.text.isEmpty) {
-                      if (_usernameTextEditingController.text.isEmpty) {
-                        errorMessageUsername = "Invalid username";
+                    if (_textEditingControllerEmail.text.isEmpty ||
+                        _textEditingControllerPassword.text.isEmpty) {
+                      if (_textEditingControllerEmail.text.isEmpty) {
+                        errorMessageEmail = "Invalid username";
                       }
 
-                      if (_passwordTextEditingController.text.isEmpty) {
+                      if (_textEditingControllerPassword.text.isEmpty) {
                         errorMessagePassword = "Invalid password";
                       }
                       setState(() {});
                     } else {
                       final Future<LoginResponse> loginResponse =
                           AuthenticationApi.login(
-                              _usernameTextEditingController.text,
-                              _passwordTextEditingController.text);
+                              _textEditingControllerEmail.text,
+                              _textEditingControllerPassword.text);
 
-                      loginResponse.then((value) {
+                      /*loginResponse.then((value) {
                         _saveLoggedUser(_usernameTextEditingController.text,
                             _passwordTextEditingController.text, value.token);
                         Navigator.pushReplacement(
                             context,
                             CupertinoPageRoute(
                                 builder: (context) => HomePage()));
-                      });
+                      });*/
                     }
                   },
                   child: Text('Submit'),
@@ -112,7 +117,7 @@ class LoginPageStatelessWidget extends State<LoginPage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SignUpPage()),
+                      MaterialPageRoute(builder: (context) => SignInPage()),
                     );
                   },
                   child: Text(
@@ -124,7 +129,7 @@ class LoginPageStatelessWidget extends State<LoginPage> {
                 ),
               ),
             ],
-          ),
+          )),
         ));
   }
 

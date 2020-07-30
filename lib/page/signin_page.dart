@@ -4,12 +4,12 @@ import 'package:parkingfreemium/api/authentication_api.dart';
 
 import 'login_page.dart';
 
-class SignUpPage extends StatefulWidget {
+class SignInPage extends StatefulWidget {
   @override
-  SignUpPageStatelessWidget createState() => SignUpPageStatelessWidget();
+  SignInPageStatelessWidget createState() => SignInPageStatelessWidget();
 }
 
-class SignUpPageStatelessWidget extends State<SignUpPage> {
+class SignInPageStatelessWidget extends State<SignInPage> {
   String nameErrorMessage = null;
   String lastNameErrorMessage = null;
   String emailErrorMessage = null;
@@ -27,12 +27,13 @@ class SignUpPageStatelessWidget extends State<SignUpPage> {
         appBar: AppBar(
           // Here we take the value from the MyHomePage object that was created by
           // the App.build method, and use it to set our appbar title.
-          title: Text("Sign Up"),
+          title: Text("Sign In"),
         ),
         body: Center(
           // Center is a layout widget. It takes a single child and positions it
           // in the middle of the parent.
-          child: Column(
+          child: SingleChildScrollView(
+              child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
@@ -47,6 +48,9 @@ class SignUpPageStatelessWidget extends State<SignUpPage> {
                 ),
                 child: TextField(
                   controller: _nameController,
+                  autofocus: true,
+                  textInputAction: TextInputAction.next,
+                  onSubmitted: (_) => FocusScope.of(context).nextFocus(),
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.all(20.0),
                     hintText: 'Name',
@@ -63,6 +67,8 @@ class SignUpPageStatelessWidget extends State<SignUpPage> {
                 ),
                 child: TextField(
                   controller: _lastNameController,
+                  textInputAction: TextInputAction.next,
+                  onSubmitted: (_) => FocusScope.of(context).nextFocus(),
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.all(20.0),
                     hintText: 'Last Name',
@@ -79,6 +85,8 @@ class SignUpPageStatelessWidget extends State<SignUpPage> {
                 ),
                 child: TextField(
                   controller: _emailController,
+                  textInputAction: TextInputAction.next,
+                  onSubmitted: (_) => FocusScope.of(context).nextFocus(),
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.all(20.0),
                     hintText: 'Email',
@@ -95,6 +103,8 @@ class SignUpPageStatelessWidget extends State<SignUpPage> {
                 ),
                 child: TextField(
                   controller: _userNameController,
+                  textInputAction: TextInputAction.next,
+                  onSubmitted: (_) => FocusScope.of(context).nextFocus(),
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.all(20.0),
                     hintText: 'Username',
@@ -111,6 +121,7 @@ class SignUpPageStatelessWidget extends State<SignUpPage> {
                 ),
                 child: TextField(
                   controller: _passwordController,
+                  textInputAction: TextInputAction.done,
                   obscureText: true,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.all(20.0),
@@ -182,7 +193,7 @@ class SignUpPageStatelessWidget extends State<SignUpPage> {
                 ),
               ),
             ],
-          ),
+          )),
         ));
   }
 }
