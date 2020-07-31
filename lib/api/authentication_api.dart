@@ -3,20 +3,19 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:parkingfreemium/model/login_response.dart';
-
 class AuthenticationApi {
   static final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  static Future login(String email, String password) async {
+  static Future<FirebaseUser> login(String email, String password) async {
+    FirebaseUser user;
     try {
-      var user = await _firebaseAuth.signInWithEmailAndPassword(
+      AuthResult result = await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-      return user != null;
+      user = result.user;
     } catch (e) {
-      return e.message;
+      print(e.message);
     }
-    return null;
+    return user;
   }
 
   static Future<bool> signUp(String name, String lastName, String email,

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:parkingfreemium/api/authentication_api.dart';
@@ -92,18 +93,24 @@ class LoginPageStatelessWidget extends State<LoginPage> {
                       }
                       setState(() {});
                     } else {
-                      final Future loginResponse = AuthenticationApi.login(
-                          _textEditingControllerEmail.text,
-                          _textEditingControllerPassword.text);
+                      final Future<FirebaseUser> loginResponse =
+                          AuthenticationApi.login(
+                              _textEditingControllerEmail.text,
+                              _textEditingControllerPassword.text);
 
-                      /*loginResponse.then((value) {
-                        _saveLoggedUser(_usernameTextEditingController.text,
-                            _passwordTextEditingController.text, value.token);
+                      loginResponse.then((value) {
+                        print(value);
+                        var idToken = value.getIdToken();
+                        idToken.then((value) {
+                          _saveLoggedUser(_textEditingControllerEmail.text,
+                              _textEditingControllerPassword.text, value.token);
+                        });
+
                         Navigator.pushReplacement(
                             context,
                             CupertinoPageRoute(
                                 builder: (context) => HomePage()));
-                      });*/
+                      });
                     }
                   },
                   child: Text('Submit'),
