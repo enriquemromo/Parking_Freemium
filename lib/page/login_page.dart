@@ -92,10 +92,9 @@ class LoginPageStatelessWidget extends State<LoginPage> {
                       }
                       setState(() {});
                     } else {
-                      final Future<LoginResponse> loginResponse =
-                          AuthenticationApi.login(
-                              _textEditingControllerEmail.text,
-                              _textEditingControllerPassword.text);
+                      final Future loginResponse = AuthenticationApi.login(
+                          _textEditingControllerEmail.text,
+                          _textEditingControllerPassword.text);
 
                       /*loginResponse.then((value) {
                         _saveLoggedUser(_usernameTextEditingController.text,
