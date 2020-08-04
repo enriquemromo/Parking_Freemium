@@ -20,22 +20,13 @@ class AuthenticationApi {
 
   static Future<bool> signUp(String name, String lastName, String email,
       String username, String password) async {
-    var body = jsonEncode({
-      'name': name,
-      'lastName': lastName,
-      'email': email,
-      'username': username,
-      'password': password
-    });
-    Map<String, String> headers = {"Content-Type": "application/json"};
-    final response = await http.post('http://localhost:8080/v1/api/auth/signup',
-        body: body, headers: headers);
-    print(response.body);
-    if (response.statusCode == 200) {
-      return true;
-    } else {
-      throw Exception('Failed to load post');
+    try {
+      var authResult = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      return authResult.user != null;
+    } catch (e) {
+      print(e.message);
+      return false;
     }
-    return false;
   }
 }
