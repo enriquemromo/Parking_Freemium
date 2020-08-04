@@ -127,7 +127,7 @@ class LoginPageStatelessWidget extends State<LoginPage> {
                     );
                   },
                   child: Text(
-                    'Sign In',
+                    'Sign Up',
                     style: TextStyle(
                       color: kTextColor,
                     ),
